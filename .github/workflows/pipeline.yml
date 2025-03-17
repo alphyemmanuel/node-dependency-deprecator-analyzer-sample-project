@@ -1,9 +1,9 @@
-name: Run Python Script in Node.js Project
+name: Run Python Script from Another Repo
 
 on: 
   push:
     branches:
-      - main
+      - main  # Runs when code is pushed to main
   workflow_dispatch:  # Allows manual execution
 
 jobs:
@@ -11,8 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Node.js Repository
         uses: actions/checkout@v3
+
+      - name: Checkout Python Repository
+        uses: actions/checkout@v3
+        with:
+          repository: alphyemmanuel/dependency-deprecator-analyzer  # Change this to your Python repo
+          path: python-repo  # This will clone the Python repo into a folder
 
       - name: Set Up Node.js
         uses: actions/setup-node@v3
@@ -20,7 +26,7 @@ jobs:
           node-version: "18"
 
       - name: Install Node.js Dependencies
-        run: npm install  # Install dependencies if package.json exists
+        run: npm install  # Installs Node.js dependencies if package.json exists
 
       - name: Set Up Python
         uses: actions/setup-python@v4
@@ -30,7 +36,7 @@ jobs:
       - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f python-repo/requirements.txt ]; then pip install -r python-repo/requirements.txt; fi
 
       - name: Run Python Script
-        run: python script.py
+        run: python python-repo/script.py  # Running script from the cloned repo
