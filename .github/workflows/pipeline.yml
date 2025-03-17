@@ -37,9 +37,15 @@ jobs:
         run: |
           python -m venv python-repo/venv  # Create virtual environment
           source python-repo/venv/bin/activate  # Activate virtual environment
-          python -m pip install --upgrade pip
-          if [ -f python-repo/requirements.txt ]; then pip install -r python-repo/requirements.txt; fi
-        shell: bash  # Ensures script runs in a Bash shell
+          pip install --upgrade pip
+          pip install -r python-repo/requirements.txt  # Install dependencies
+        shell: bash
+
+      - name: Verify Installed Packages (Debugging Step)
+        run: |
+          source python-repo/venv/bin/activate  # Activate virtual environment
+          pip list  # List installed packages to verify huggingface_hub is installed
+        shell: bash
 
       - name: Run Python Script
         run: |
