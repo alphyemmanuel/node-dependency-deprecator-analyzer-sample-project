@@ -3,8 +3,8 @@ name: Run Python Script from Another Repo
 on: 
   push:
     branches:
-      - main  # Runs when code is pushed to main
-  workflow_dispatch:  # Allows manual execution
+      - main
+  workflow_dispatch:
 
 jobs:
   run-python:
@@ -33,22 +33,19 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Create and Activate Virtual Environment
+      - name: Create Virtual Environment and Install Dependencies
         run: |
           python -m venv python-repo/venv  # Create virtual environment
-          source python-repo/venv/bin/activate  # Activate virtual environment
-          pip install --upgrade pip
-          pip install -r python-repo/requirements.txt  # Install dependencies
+          python-repo/venv/bin/python -m pip install --upgrade pip
+          python-repo/venv/bin/python -m pip install -r python-repo/requirements.txt  # Install dependencies
         shell: bash
 
       - name: Verify Installed Packages (Debugging Step)
         run: |
-          source python-repo/venv/bin/activate  # Activate virtual environment
-          pip list  # List installed packages to verify huggingface_hub is installed
+          python-repo/venv/bin/python -m pip list  # List installed packages to verify huggingface_hub is installed
         shell: bash
 
       - name: Run Python Script
         run: |
-          source python-repo/venv/bin/activate  # Activate virtual environment
-          python python-repo/app/analyzer.py
+          python-repo/venv/bin/python python-repo/app/analyzer.py  # Run script using venv Python
         shell: bash
