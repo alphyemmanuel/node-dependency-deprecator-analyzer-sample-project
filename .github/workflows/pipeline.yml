@@ -9,7 +9,11 @@ on:
 jobs:
   run-python:
     runs-on: ubuntu-latest
-
+    env:
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }} 
+      HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}  
+      REPO_OWNER: ${{ secrets.REPO_OWNER }}  
+      
     steps:
       - name: Checkout Node.js Repository
         uses: actions/checkout@v3
@@ -57,21 +61,12 @@ jobs:
           source python-repo/venv/bin/activate
           python python-repo/app/clone_repo.py
         shell: bash
-        env:
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }} 
-          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}  
-          REPO_OWNER: ${{ secrets.REPO_OWNER }}  
 
       - name: Run Analyzer Script
         run: |
           source python-repo/venv/bin/activate
           python python-repo/app/analyzer.py
         shell: bash
-        env:
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }} 
-          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}  
-          REPO_OWNER: ${{ secrets.REPO_OWNER }}  
-
         
 
 
