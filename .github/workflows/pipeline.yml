@@ -1,9 +1,10 @@
 name: Run Python Script on Pull Request
 
 on: 
-  pull_request:
+  push:
     branches:
-      - main  # Runs only when a PR is created targeting "main"
+      - main
+  workflow_dispatch:
 
 jobs:
   run-python:
