@@ -46,7 +46,7 @@ jobs:
 
       - name: Run Python Script
         env:
-        COMMIT_ID: ${{ github.event.client_payload.commit_id }}
+        COMMIT_ID: ${{ github.sha }}
         run: |
           python-repo/venv/bin/python python-repo/app/analyzer.py
         shell: bash
