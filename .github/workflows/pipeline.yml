@@ -41,7 +41,7 @@ jobs:
         run: |
          echo "GIT_TOKEN: $GIT_TOKEN"
          echo "HUGGINGFACE_TOKEN: $HUGGINGFACE_TOKEN"
-        echo "REPO_OWNER: $REPO_OWNER"
+         echo "REPO_OWNER: $REPO_OWNER"
 
       - name: Set Up Node.js
         uses: actions/setup-node@v3
