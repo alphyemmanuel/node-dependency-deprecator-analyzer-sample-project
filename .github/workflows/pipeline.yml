@@ -52,9 +52,16 @@ jobs:
           pip list
         shell: bash
 
-      - name: Run Python Script with Commit ID
+      - name: Run Clone Repository Script
         run: |
           source python-repo/venv/bin/activate
-          python python-repo/app/analyzer.py "$COMMIT_ID"
+          python python-repo/app/clone_repo.py
         shell: bash
+
+      - name: Run Analyzer Script
+        run: |
+          source python-repo/venv/bin/activate
+          python python-repo/app/analyzer.py
+        shell: bash
+
 
