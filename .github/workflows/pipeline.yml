@@ -37,6 +37,7 @@ jobs:
         run: |
           echo "COMMIT_ID=${{ github.sha }}" >> $GITHUB_ENV
           echo "Short Commit ID: $(echo ${{ github.sha }} | cut -c1-7)"
+          echo "HUGGINGFACE_TOKEN=${{ secrets.HUGGINGFACE_TOKEN }}" >> $GITHUB_ENV
 
       - name: Create Virtual Environment and Install Dependencies
         run: |
