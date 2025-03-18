@@ -32,21 +32,28 @@ jobs:
         with:
           python-version: "3.10"
 
+      - name: Get Commit ID
+        run: |
+          echo "COMMIT_ID=${{ github.sha }}" >> $GITHUB_ENV
+          echo "Short Commit ID: $(echo ${{ github.sha }} | cut -c1-7)"
+
       - name: Create Virtual Environment and Install Dependencies
         run: |
-          python -m venv python-repo/venv
-          python-repo/venv/bin/python -m pip install --upgrade pip
-          python-repo/venv/bin/python -m pip install -r python-repo/requirements.txt
+          python -m venv python-repo/venv  # Create virtual environment
+          source python-repo/venv/bin/activate  # Activate virtual environment
+          pip install --upgrade pip
+          pip install -r python-repo/requirements.txt
         shell: bash
 
       - name: Verify Installed Packages
         run: |
-          python-repo/venv/bin/python -m pip list
+          source python-repo/venv/bin/activate
+          pip list
         shell: bash
 
-      - name: Run Python Script
-        env:
-        COMMIT_ID: ${{ github.sha }}
+      - name: Run Python Script with Commit ID
         run: |
-          python-repo/venv/bin/python python-repo/app/analyzer.py
+          source python-repo/venv/bin/activate
+          python python-repo/app/analyzer.py "$COMMIT_ID"
         shell: bash
+
