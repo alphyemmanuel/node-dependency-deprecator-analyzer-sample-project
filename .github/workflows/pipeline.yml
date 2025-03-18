@@ -1,10 +1,9 @@
-name: Run Python Script from Another Repo
+name: Run Python Script on Pull Request
 
 on: 
-  push:
+  pull_request:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # Runs only when a PR is created targeting "main"
 
 jobs:
   run-python:
@@ -35,17 +34,17 @@ jobs:
 
       - name: Create Virtual Environment and Install Dependencies
         run: |
-          python -m venv python-repo/venv  # Create virtual environment
+          python -m venv python-repo/venv
           python-repo/venv/bin/python -m pip install --upgrade pip
-          python-repo/venv/bin/python -m pip install -r python-repo/requirements.txt  # Install dependencies
+          python-repo/venv/bin/python -m pip install -r python-repo/requirements.txt
         shell: bash
 
-      - name: Verify Installed Packages (Debugging Step)
+      - name: Verify Installed Packages
         run: |
-          python-repo/venv/bin/python -m pip list  # List installed packages to verify huggingface_hub is installed
+          python-repo/venv/bin/python -m pip list
         shell: bash
 
       - name: Run Python Script
         run: |
-          python-repo/venv/bin/python python-repo/app/analyzer.py  # Run script using venv Python
+          python-repo/venv/bin/python python-repo/app/analyzer.py
         shell: bash
