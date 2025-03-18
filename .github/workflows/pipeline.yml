@@ -24,6 +24,13 @@ jobs:
           repository: alphyemmanuel/dependency-deprecator-analyzer  # Change this to your Python repo
           path: python-repo  # This will clone the Python repo into a folder
 
+      - name: Check if Secrets Exist
+        run: |
+          if [ -z "$GIT_TOKEN" ]; then echo "❌ GIT_TOKEN is missing"; else echo "✅ GIT_TOKEN is set"; fi
+          if [ -z "$HUGGINGFACE_TOKEN" ]; then echo "❌ HUGGINGFACE_TOKEN is missing"; else echo "✅ HUGGINGFACE_TOKEN is set"; fi
+          if [ -z "$REPO_OWNER" ]; then echo "❌ REPO_OWNER is missing"; else echo "✅ REPO_OWNER is set"; fi
+        shell: bash
+
       - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
