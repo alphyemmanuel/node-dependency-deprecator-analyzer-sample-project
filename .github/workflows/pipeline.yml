@@ -31,6 +31,18 @@ jobs:
           if [ -z "$REPO_OWNER" ]; then echo "❌ REPO_OWNER is missing"; else echo "✅ REPO_OWNER is set"; fi
         shell: bash
 
+      - name: Manually Set Test Secret
+        run: |
+         echo "GIT_TOKEN=test-secret" >> $GITHUB_ENV
+         echo "HUGGINGFACE_TOKEN=test-secret" >> $GITHUB_ENV
+         echo "REPO_OWNER=test-user" >> $GITHUB_ENV
+
+      - name: Debug Test Secret
+        run: |
+         echo "GIT_TOKEN: $GIT_TOKEN"
+         echo "HUGGINGFACE_TOKEN: $HUGGINGFACE_TOKEN"
+        echo "REPO_OWNER: $REPO_OWNER"
+
       - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
