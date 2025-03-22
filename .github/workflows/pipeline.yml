@@ -20,18 +20,6 @@ jobs:
         with:
           repository: alphyemmanuel/dependency-deprecator-analyzer  # Change this to your Python repo
           path: python-repo  # This will clone the Python repo into a folder
-          
-      - name: Set Environment Variables from Secrets
-        run: |
-          echo "GIT_TOKEN=${{ secrets.GIT_TOKEN }}" >> $GITHUB_ENV
-          echo "HUGGINGFACE_TOKEN=${{ secrets.HUGGINGFACE_TOKEN }}" >> $GITHUB_ENV
-          echo "REPO_OWNER=${{ secrets.REPO_OWNER }}" >> $GITHUB_ENV
-
-      - name: Debug Secrets (Masked)
-        run: |
-          echo "GIT_TOKEN: ${GIT_TOKEN:0:5}******"
-          echo "HUGGINGFACE_TOKEN: ${HUGGINGFACE_TOKEN:0:5}******"
-          echo "REPO_OWNER: $REPO_OWNER"
 
       - name: Set Up Node.js
         uses: actions/setup-node@v3
@@ -45,12 +33,6 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-
-      - name: Get Commit ID
-        run: |
-          echo "COMMIT_ID=${{ github.sha }}" >> $GITHUB_ENV
-          echo "Short Commit ID: $(echo ${{ github.sha }} | cut -c1-7)"
-          echo "Hugging face token: API_TOKEN=${{ secrets.HUGGINGFACE_TOKEN }}"
 
       - name: Create Virtual Environment and Install Dependencies
         run: |
